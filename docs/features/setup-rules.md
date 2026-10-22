@@ -30,7 +30,7 @@ Admins set up **departments**, **categories** and **approval rules**, so every r
 
 === "Issues"
 
-    ??? issue "#2 · Set up departments and approvers"
+    ??? issue "Issue #2 · Set up departments and approvers"
         Admins add departments and choose each department's approver.
 
         **Done when**
@@ -40,7 +40,7 @@ Admins set up **departments**, **categories** and **approval rules**, so every r
 
         <span class="pill pill--done">Done</span> · [Open #2 on GitHub](https://github.com/saanchi365/requisio-ux-demo/issues/2)
 
-    ??? issue "#3 · Set up request categories"
+    ??? issue "Issue #3 · Set up request categories"
         Admins create categories (IT equipment, Software, Services) with a few fields each.
 
         **Done when**
@@ -50,7 +50,7 @@ Admins set up **departments**, **categories** and **approval rules**, so every r
 
         <span class="pill pill--done">Done</span> · [Open #3 on GitHub](https://github.com/saanchi365/requisio-ux-demo/issues/3)
 
-    ??? issue "#4 · Set up approval rules by amount"
+    ??? issue "Issue #4 · Set up approval rules by amount"
         Requests above an amount need an extra approver (for example, over 5,000 needs Finance).
 
         **Done when**

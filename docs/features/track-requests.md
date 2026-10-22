@@ -30,7 +30,7 @@ Everyone can **find a request** and see its **status**, **approval route** and *
 
 === "Issues"
 
-    ??? issue "#15 · Request list with search and filters"
+    ??? issue "Issue #15 · Request list with search and filters"
         A list of requests with search and filters by status, category and date.
 
         **Done when**
@@ -40,7 +40,7 @@ Everyone can **find a request** and see its **status**, **approval route** and *
 
         <span class="pill pill--todo">To do</span> · [Open #15 on GitHub](https://github.com/saanchi365/requisio-ux-demo/issues/15)
 
-    ??? issue "#16 · Request details and history"
+    ??? issue "Issue #16 · Request details and history"
         A details page shows status, approval route, history and comments.
 
         **Done when**

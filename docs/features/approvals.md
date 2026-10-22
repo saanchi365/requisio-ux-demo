@@ -36,7 +36,7 @@ Approvers decide on requests in one place: **approve**, **reject with a reason**
 
 === "Issues"
 
-    ??? issue "#11 · Approve or reject a request"
+    ??? issue "Issue #11 · Approve or reject a request"
         Approvers approve, or reject with a reason.
 
         **Done when**
@@ -46,7 +46,7 @@ Approvers decide on requests in one place: **approve**, **reject with a reason**
 
         <span class="pill pill--todo">To do</span> · [Open #11 on GitHub](https://github.com/saanchi365/requisio-ux-demo/issues/11)
 
-    ??? issue "#12 · Ask for changes and resubmit"
+    ??? issue "Issue #12 · Ask for changes and resubmit"
         Approvers can send a request back; the requester edits and resubmits.
 
         **Done when**
@@ -56,7 +56,7 @@ Approvers decide on requests in one place: **approve**, **reject with a reason**
 
         <span class="pill pill--todo">To do</span> · [Open #12 on GitHub](https://github.com/saanchi365/requisio-ux-demo/issues/12)
 
-    ??? issue "#13 · Delegate approval"
+    ??? issue "Issue #13 · Delegate approval"
         Approvers can hand decisions to a colleague while away.
 
         **Done when**

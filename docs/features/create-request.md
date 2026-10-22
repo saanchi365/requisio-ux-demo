@@ -30,7 +30,7 @@ Employees raise a request to buy something, from a **catalog item** or a **custo
 
 === "Issues"
 
-    ??? issue "#6 · Start a new request"
+    ??? issue "Issue #6 · Start a new request"
         A clear “New request” button lets the requester choose a catalog item or a custom item.
 
         **Done when**
@@ -40,7 +40,7 @@ Employees raise a request to buy something, from a **catalog item** or a **custo
 
         <span class="pill pill--progress">In progress</span> · [Open #6 on GitHub](https://github.com/saanchi365/requisio-ux-demo/issues/6)
 
-    ??? issue "#7 · Fill in request details"
+    ??? issue "Issue #7 · Fill in request details"
         The requester fills item, quantity, cost, needed-by date and a reason.
 
         **Done when**
@@ -50,7 +50,7 @@ Employees raise a request to buy something, from a **catalog item** or a **custo
 
         <span class="pill pill--progress">In progress</span> · [Open #7 on GitHub](https://github.com/saanchi365/requisio-ux-demo/issues/7)
 
-    ??? issue "#8 · Attach a vendor quote"
+    ??? issue "Issue #8 · Attach a vendor quote"
         The requester can upload a quote; the amount is read from it.
 
         **Done when**
@@ -60,7 +60,7 @@ Employees raise a request to buy something, from a **catalog item** or a **custo
 
         <span class="pill pill--progress">In progress</span> · [Open #8 on GitHub](https://github.com/saanchi365/requisio-ux-demo/issues/8)
 
-    ??? issue "#9 · Submit for approval"
+    ??? issue "Issue #9 · Submit for approval"
         The requester sees the approval route and submits.
 
         **Done when**
