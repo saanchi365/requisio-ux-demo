@@ -137,6 +137,11 @@ def slugify(text):
 
 
 raw, BOARD_READ = fetch_issues()
+# Without permission for the board, GitHub quietly returns no board rows instead of an error.
+if BOARD_READ and not any(board_columns(r) for r in raw):
+    print("Note: the project board looks empty to the website, so it probably has no permission to read it. "
+          "Add a HANDBOOK_TOKEN secret (see the handbook's setup notes).")
+    BOARD_READ = False
 I = {}
 for r in raw:
     cols = board_columns(r)
