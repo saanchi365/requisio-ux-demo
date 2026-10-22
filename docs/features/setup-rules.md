@@ -13,6 +13,7 @@ Admins set up **departments**, **categories** and **approval rules**, so every r
   <div><span class="label">Who uses it</span>Admin</div>
   <div><span class="label">Status</span><span class="pill pill--done">Done</span></div>
   <div><span class="label">Priority</span>P1</div>
+  <div><span class="label">Target date</span>19 Sep 2026</div>
   <div><span class="label">Feature issue</span><a href="https://github.com/saanchi365/requisio-ux-demo/issues/1">#1</a></div>
 </div>
 

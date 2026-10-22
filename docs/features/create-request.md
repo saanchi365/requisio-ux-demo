@@ -13,6 +13,7 @@ Employees raise a request to buy something, from a **catalog item** or a **custo
   <div><span class="label">Who uses it</span>Requester</div>
   <div><span class="label">Status</span><span class="pill pill--progress">In progress</span></div>
   <div><span class="label">Priority</span>P0</div>
+  <div><span class="label">Target date</span>31 Oct 2026</div>
   <div><span class="label">Feature issue</span><a href="https://github.com/saanchi365/requisio-ux-demo/issues/5">#5</a></div>
 </div>
 

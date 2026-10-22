@@ -13,6 +13,7 @@ Approvers decide on requests in one place: **approve**, **reject with a reason**
   <div><span class="label">Who uses it</span>Approvers, Finance</div>
   <div><span class="label">Status</span><span class="pill pill--todo">To do</span></div>
   <div><span class="label">Priority</span>P0</div>
+  <div><span class="label">Target date</span>28 Nov 2026</div>
   <div><span class="label">Feature issue</span><a href="https://github.com/saanchi365/requisio-ux-demo/issues/10">#10</a></div>
 </div>
 

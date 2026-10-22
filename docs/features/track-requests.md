@@ -13,6 +13,7 @@ Everyone can **find a request** and see its **status**, **approval route** and *
   <div><span class="label">Who uses it</span>Everyone</div>
   <div><span class="label">Status</span><span class="pill pill--todo">To do</span></div>
   <div><span class="label">Priority</span>P1</div>
+  <div><span class="label">Target date</span>19 Dec 2026</div>
   <div><span class="label">Feature issue</span><a href="https://github.com/saanchi365/requisio-ux-demo/issues/14">#14</a></div>
 </div>
 

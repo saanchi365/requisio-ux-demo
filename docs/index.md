@@ -88,8 +88,9 @@ hide:
 
 #### Recently changed
 
+- 22 Oct 2026 · Docusaurus version added for comparison
+- 22 Oct 2026 · Requirements page has all board columns
 - 22 Oct 2026 · New layout and theme
-- 22 Oct 2026 · Requirements page added
 - 22 Oct 2026 · Setup and Track pages added
 - 22 Oct 2026 · Approvals page added
 
