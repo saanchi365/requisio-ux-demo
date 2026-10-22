@@ -227,3 +227,9 @@
   .md-typeset .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .md-typeset .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* Home: feature progress cards two per row, so none is left alone */
+.md-typeset .grid.cards.cols-2 > ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media screen and (max-width: 45em) {
+  .md-typeset .grid.cards.cols-2 > ul { grid-template-columns: 1fr; }
+}

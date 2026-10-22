@@ -23,7 +23,7 @@ hide:
 
 ## Where things stand
 
-<div class="grid cards" markdown>
+<div class="grid cards cols-2" markdown>
 
 -   **[Set up approval rules](features/setup-rules.md)**
 
