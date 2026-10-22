@@ -1,0 +1,38 @@
+site_name: Requisio handbook
+site_url: https://saanchi365.github.io/requisio-ux-demo/
+repo_url: https://github.com/saanchi365/requisio-ux-demo
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.path
+    - navigation.footer
+    - search.suggest
+    - content.tabs.link
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.snippets:
+      base_path: ["."]
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Start here: index.md
+  - Features:
+      - Create a purchase request: features/create-request.md
+  - Who uses Requisio:
+      - User understanding: user-understanding.md
+      - Journey map: journey-map.md
+      - Use cases: use-cases.md
