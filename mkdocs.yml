@@ -34,7 +34,6 @@ theme:
     - navigation.footer
     - search.suggest
     - search.highlight
-    - content.tabs.link
 
 extra_css:
   - stylesheets/extra.css

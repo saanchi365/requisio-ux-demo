@@ -126,7 +126,6 @@
   align-items: start;
 }
 .md-typeset .tabbed-labels > label { font-size: 0.78rem; font-weight: 600; }
-.md-typeset .tabbed-set > input:checked + label,
 .md-typeset .tabbed-labels > label:hover { color: var(--brand); }
 .md-typeset .side-panel {
   position: sticky;
@@ -229,7 +228,7 @@
 }
 
 /* Home: feature progress cards two per row, so none is left alone */
-.md-typeset .grid.cards.cols-2 > ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.md-typeset .grid.cards.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media screen and (max-width: 45em) {
-  .md-typeset .grid.cards.cols-2 > ul { grid-template-columns: 1fr; }
+  .md-typeset .grid.cards.cols-2 { grid-template-columns: 1fr; }
 }
