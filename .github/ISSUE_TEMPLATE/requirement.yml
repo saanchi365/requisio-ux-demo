@@ -1,0 +1,40 @@
+name: Requirement
+description: One requirement inside a feature (level 2), or one step inside a big requirement (level 3).
+labels: ["requirement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Create this as a **sub-issue** of its feature (level 2) or of a big requirement (level 3), so it shows in the right place.
+        Small points (e.g. "opens in Word", "clause library on the side") go in **Details** as bullets, not as more issues.
+  - type: textarea
+    attributes:
+      label: Requirement
+      description: What is needed, in plain words
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Given by
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Where it came from
+      options: [Meeting, Email, Chat, Document, Other]
+  - type: textarea
+    attributes:
+      label: Done when
+      description: One per line, starting with "- "
+      value: |
+        - 
+  - type: textarea
+    attributes:
+      label: Details
+      description: The small points, one per line, starting with "- "
+      value: |
+        - 
+  - type: dropdown
+    attributes:
+      label: How sure are we?
+      options: [Confirmed — the person said it clearly, Not sure yet — needs checking]

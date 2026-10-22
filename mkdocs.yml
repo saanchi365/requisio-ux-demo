@@ -61,13 +61,11 @@ nav:
   - Home: index.md
   - Features:
       - features/index.md
-      - Setting up:
-          - Set up approval rules: features/setup-rules.md
-      - Requesting:
-          - Create a purchase request: features/create-request.md
-          - Track purchase requests: features/track-requests.md
-      - Approving:
-          - Approve purchase requests: features/approvals.md
+      # The features below are filled in automatically from the issues on every publish
+      - "Setup: departments, categories and approval rules": features/setup-departments-categories-and-approval-rules.md
+      - "Create a purchase request": features/create-a-purchase-request.md
+      - "Approve purchase requests": features/approve-purchase-requests.md
+      - "Track purchase requests": features/track-purchase-requests.md
   - Users:
       - User understanding: user-understanding.md
       - Journey map: journey-map.md

@@ -1,0 +1,37 @@
+name: Feature
+description: A big thing the product does (level 1). It becomes its own page in the handbook.
+labels: ["feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A **feature** is the top level, e.g. "Create a purchase request".
+        After creating it, add its requirements as **sub-issues** (Create sub-issue, at the bottom of the issue).
+  - type: textarea
+    attributes:
+      label: What it is
+      description: One or two sentences. This is the overview at the top of the feature's page.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Who uses it
+      placeholder: e.g. Requester (any employee)
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Use cases
+      description: One per line, starting with "- "
+      value: |
+        - 
+  - type: input
+    attributes:
+      label: Given by
+      description: Who asked for it
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Where it came from
+      options: [Meeting, Email, Chat, Document, Other]

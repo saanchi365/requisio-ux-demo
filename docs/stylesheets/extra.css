@@ -238,3 +238,13 @@
 .md-typeset .req-table td, .md-typeset .req-table th { white-space: nowrap; vertical-align: top; }
 .md-typeset .req-table td:nth-child(2), .md-typeset .req-table td:last-child { white-space: normal; min-width: 12rem; }
 .md-typeset .facts { grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); }
+
+/* Issues inside issues (requirement -> detail) and wireframe pictures */
+.md-typeset details.issue details.issue { margin-left: 0; background: var(--md-default-bg-color); }
+.md-typeset .wireframe {
+  display: block;
+  max-width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin: 0.4rem 0 1rem;
+}
