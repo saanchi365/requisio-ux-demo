@@ -1,5 +1,6 @@
 /* ---------- Colours (light) ---------- */
-:root {
+:root,
+[data-md-color-scheme="default"] {
   --md-primary-fg-color: #ffffff;
   --md-primary-fg-color--light: #ffffff;
   --md-primary-fg-color--dark: #f4f4f5;
