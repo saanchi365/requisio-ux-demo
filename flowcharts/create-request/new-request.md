@@ -9,6 +9,7 @@
 
 **How to read it:** rounded rectangle = start or end · rectangle = a step · diamond = a decision · a **dashed border** means it is an assumption.
 
+<!-- --8<-- [start:flow] -->
 ```mermaid
 flowchart TD
     a("Requester clicks New request<br/>#6")
@@ -36,6 +37,7 @@ flowchart TD
     l -->|Later| m
     l -->|Yes| n
 ```
+<!-- --8<-- [end:flow] -->
 
 ## What comes from the documents
 - Catalog vs custom items (Use cases 1–2)

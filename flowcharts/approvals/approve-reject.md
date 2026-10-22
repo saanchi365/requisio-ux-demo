@@ -9,6 +9,7 @@
 
 **How to read it:** rounded rectangle = start or end · rectangle = a step · diamond = a decision · a **dashed border** means it is an assumption.
 
+<!-- --8<-- [start:flow] -->
 ```mermaid
 flowchart TD
     a("Approver opens a waiting request")
@@ -31,6 +32,7 @@ flowchart TD
     c -->|Ask for changes| i --> j --> a
     c -->|Delegate| k --> l
 ```
+<!-- --8<-- [end:flow] -->
 
 ## What comes from the documents
 - Reject needs a reason (#11)

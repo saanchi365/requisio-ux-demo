@@ -9,6 +9,7 @@
 
 **How to read it:** top to bottom, each arrow is one message between people or systems.
 
+<!-- --8<-- [start:flow] -->
 ```mermaid
 sequenceDiagram
     actor R as Requester
@@ -25,6 +26,7 @@ sequenceDiagram
     end
     S-->>R: Approved
 ```
+<!-- --8<-- [end:flow] -->
 
 ## What comes from the documents
 - Route shown on submit (#9)

@@ -9,6 +9,7 @@
 
 **How to read it:** rounded rectangle = start or end · rectangle = a step · diamond = a decision · a **dashed border** means it is an assumption.
 
+<!-- --8<-- [start:flow] -->
 ```mermaid
 flowchart TD
     a("Admin opens Setup")
@@ -31,6 +32,7 @@ flowchart TD
     class i,j guess
     classDef guess stroke-dasharray: 5 5
 ```
+<!-- --8<-- [end:flow] -->
 
 ## What comes from the documents
 - Departments, categories and rules by amount (#2, #3, #4)
