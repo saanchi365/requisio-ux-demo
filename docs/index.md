@@ -8,13 +8,21 @@ Welcome! This handbook explains **what Requisio does**, **how each feature works
 
 <div class="grid cards" markdown>
 
--   **📝 Create a purchase request**
+-   **[📝 Create a purchase request](features/create-request.md)**
 
     ---
 
     Employees ask to buy something, from a catalog item or a custom item.
 
     [Open this feature →](features/create-request.md)
+
+-   **[✅ Approve purchase requests](features/approvals.md)**
+
+    ---
+
+    Approvers decide on requests in one place, with reasons.
+
+    [Open this feature →](features/approvals.md)
 
 </div>
 
