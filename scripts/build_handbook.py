@@ -58,8 +58,9 @@ query($owner: String!, $name: String!, $cursor: String) {
     issues(first: 50, after: $cursor, states: [OPEN, CLOSED], orderBy: {field: CREATED_AT, direction: ASC}) {
       pageInfo { hasNextPage endCursor }
       nodes {
-        number title body state updatedAt
+        number title body state updatedAt createdAt url
         labels(first: 10) { nodes { name } }
+        comments(first: 30) { nodes { author { login } body createdAt url } }
         assignees(first: 5) { nodes { login } }
         parent { number }
         subIssues(first: 50) { nodes { number } }
@@ -153,7 +154,9 @@ for r in raw:
         parent=(r["parent"] or {}).get("number"), children=[c["number"] for c in r["subIssues"]["nodes"]],
         status=status, priority=cols.get("Priority", ""), start=cols.get("Start date"), target=cols.get("Target date"),
         comments=(cols.get("comments/ inputs") or "").strip(), assignees=[a["login"] for a in r["assignees"]["nodes"]],
-        updated=r["updatedAt"], sections=s)
+        updated=r["updatedAt"], created=r["createdAt"], url=r["url"], sections=s,
+        gh_comments=[dict(author=(c["author"] or {}).get("login", "someone"), body=c["body"], created=c["createdAt"], url=c["url"])
+                     for c in r["comments"]["nodes"]])
 
 
 def root(n):
@@ -540,3 +543,154 @@ cfg.write_text(text, encoding="utf-8", newline="\n")
 
 print(f"Handbook pages made: {len(FEATURES)} features, {len(work)} issues, {len(ORPHANS)} not under a feature, {len(PROBLEMS)} need fixing, "
       f"{sum(len(v) for v in WIREFRAMES.values())} wireframes, board read: {BOARD_READ}")
+
+
+# ------------------------------------------------------------------ shared data file for the Hugo and Docusaurus copies
+# The copies (requisio-ux-demo-hugo, requisio-ux-demo-docusaurus) build their websites from this one file,
+# published at <site>/handbook-data.json, so there is a single source of truth and they need no board key.
+import subprocess as _sp
+import markdown as _md  # comes with MkDocs
+
+
+def _settings():
+    """handbook.yml: name, brief, stages, board (a tiny reader for this simple file)."""
+    text = (ROOT / "handbook.yml").read_text(encoding="utf-8") if (ROOT / "handbook.yml").exists() else ""
+    out, key, brief = {"stages": []}, None, []
+    for line in text.splitlines():
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        m = re.match(r"^(\w+):\s*(.*)$", line)
+        if m:
+            key, val = m.group(1), m.group(2).strip()
+            if key in ("name", "board"):
+                out[key] = val
+            elif key == "brief":
+                brief = [] if val in (">-", ">", "|") else [val]
+            continue
+        if key == "brief":
+            brief.append(line.strip())
+        elif key == "stages" and line.strip().startswith("- "):
+            out["stages"].append(line.strip()[2:].strip())
+    out["brief"] = " ".join(brief)
+    return out
+
+
+def _git_dates(path):
+    try:
+        log = _sp.run(["git", "log", "--format=%cI", "--", str(path)], capture_output=True, text=True, cwd=ROOT).stdout.split()
+        return (log[-1], log[0]) if log else (None, None)
+    except OSError:
+        return None, None
+
+
+NODE = re.compile(r'^\s*(\w+)\s*(\(\(|\(\[|\(|\[\[|\[|\{\{|\{)"?(.*?)"?(\)\)|\]\)|\)|\]\]|\]|\}\}|\})\s*$')
+
+
+def _steps(mermaid):
+    """The steps of a diagram as plain text, in the order they are written."""
+    steps, seen = [], set()
+    if mermaid.lstrip().startswith("sequenceDiagram"):
+        for line in mermaid.splitlines():
+            m = re.match(r"^\s*\w+\s*-+>>?\+?\s*\w+\s*:\s*(.+)$", line)
+            if m:
+                steps.append(dict(label=m.group(1).strip(), kind="step", refs=[int(x) for x in re.findall(r"#(\d+)", m.group(1))]))
+        return steps
+    for line in mermaid.splitlines():
+        for part in re.split(r"\s*-->\s*|\s*-\.->\s*|\s*-->\|[^|]*\|\s*", line):
+            m = NODE.match(part)
+            if not m or m.group(1) in seen or m.group(1) in ("subgraph", "class", "classDef", "end"):
+                continue
+            seen.add(m.group(1))
+            label = re.sub(r"<br\s*/?>", " ", m.group(3))
+            refs = [int(x) for x in re.findall(r"#(\d+)", label)]
+            label = re.sub(r"\s*#\d+", "", label).strip()
+            kind = "decision" if m.group(2).startswith("{") else "start" if m.group(2) in ("(", "((", "([") else "step"
+            steps.append(dict(label=label, kind=kind, refs=refs))
+    return steps
+
+
+def _flowcharts():
+    out = []
+    for path in sorted((ROOT / "flowcharts").rglob("*.md")):
+        if path.name.lower() == "readme.md":
+            continue
+        text = path.read_text(encoding="utf-8")
+        diagram = re.search(r"```mermaid\s*\n(.*?)```", text, re.S)
+        if not diagram:
+            continue
+        feat = re.search(r"\|\s*\*\*(?:Feature|Area)\*\*\s*\|([^|\n]*)\|", text)
+        feat_text = feat.group(1).strip() if feat else ""
+        nums = [int(x) for x in re.findall(r"#(\d+)", feat_text)]
+        owner = "product" if (not nums and re.search(r"whole product|all features", feat_text, re.I)) else next((root(x) for x in nums if x in I and root(x) in BY_N), None)
+        if owner is None:
+            continue
+        title = re.search(r"^# (.+)$", text, re.M)
+        desc = re.search(r"^## Description\s*\n(.*?)(?=^## |\Z)", text, re.S | re.M)
+        created, updated = _git_dates(path.relative_to(ROOT))
+        mer = diagram.group(1).rstrip()
+        out.append(dict(id=slugify(path.stem), file=path.relative_to(ROOT).as_posix(), title=title.group(1).strip() if title else path.stem,
+                        feature=owner, kind="sequence" if mer.lstrip().startswith("sequenceDiagram") else "flowchart",
+                        description=desc.group(1).strip() if desc else "", questions=section_bullets(text, "Open questions"),
+                        assumptions=section_bullets(text, "Assumptions"), mermaid=mer, steps=_steps(mer),
+                        refs=sorted({int(x) for x in re.findall(r"#(\d+)", mer)}), created=created, updated=updated))
+    return out
+
+
+def _wireframes():
+    out = []
+    folder = ROOT / "wireframes"
+    for path in sorted(folder.glob("*")) if folder.exists() else []:
+        m = re.match(r"^(\d+)[-_ ]+(.*)$", path.name)
+        if not m or not path.name.lower().endswith(IMAGE):
+            continue
+        base = re.sub(r"\.(excalidraw\.)?(svg|png|jpe?g|gif|webp)$", "", path.name, flags=re.I)
+        notes = folder / f"{base}.md"
+        ntext = notes.read_text(encoding="utf-8") if notes.exists() else ""
+        d = re.search(r"^## Description\s*\n(.*?)(?=^## |\Z)", ntext, re.S | re.M)
+        out.append(dict(file=path.name, n=int(m.group(1)), title=re.sub(r"[-_]+", " ", base.split("-", 1)[-1]).strip().capitalize(),
+                        description=d.group(1).strip() if d else "", questions=section_bullets(ntext, "Open questions")))
+    return out
+
+
+def _user_doc(name, title):
+    p = DOCS / f"{name}.md"
+    if not p.exists():
+        return None
+    text = re.sub(r"^# .+\n", "", p.read_text(encoding="utf-8"), count=1)
+    return dict(title=title, html=_md.markdown(text, extensions=["tables"]))
+
+
+def _req(i):
+    d = depth_of(i)
+    return dict(n=i["n"], title=i["title"], feature=root(i["n"]), parent=i["parent"] if d > 1 else None, depth=d,
+                level="sub-requirement" if d >= 2 else "requirement", status=i["status"], priority=i["priority"],
+                start=i["start"], target=i["target"], assignees=i["assignees"], url=i["url"], updated=i["updated"],
+                given_by=i["sections"].get("given by", ""), requirement=i["sections"].get("requirement", ""),
+                questions=bullets(i["sections"].get("open questions")), inputs=i["comments"])
+
+
+_settings_data = _settings()
+_data = dict(
+    generated=datetime.now().isoformat(timespec="seconds"), repo=REPO, board_url=BOARD_URL, board_read=BOARD_READ,
+    site=f"https://{OWNER}.github.io/{NAME}/",
+    name=_settings_data.get("name") or "Handbook", brief=_settings_data.get("brief", ""), stages=_settings_data["stages"],
+    features=[dict(n=f["n"], title=f["title"], stage=f["sections"].get("stage", ""), what=f["sections"].get("what it is", ""),
+                   who=f["sections"].get("who uses it", ""), use_cases=bullets(f["sections"].get("use cases")),
+                   questions=bullets(f["sections"].get("open questions")), given_by=f["sections"].get("given by", ""),
+                   status=f["status"], priority=f["priority"], start=f["start"], target=f["target"], assignees=f["assignees"],
+                   url=f["url"], updated=f["updated"], created=f["created"],
+                   requirements=[c for c in f["children"] if c in I]) for f in FEATURES],
+    requirements=[_req(i) for f in FEATURES for i in tree(f["n"])],
+    flowcharts=_flowcharts(),
+    wireframes=_wireframes(),
+    comments=[dict(issue=i["n"], **c) for i in I.values() for c in i["gh_comments"]],
+    users={k: v for k, v in {"user-understanding": _user_doc("user-understanding", "User understanding"),
+                             "journey-map": _user_doc("journey-map", "Journey map"),
+                             "user-stories": _user_doc("user-stories", "User stories")}.items() if v},
+    recent=[dict(n=i["n"], title=i["title"], updated=i["updated"], feature=root(i["n"]) if root(i["n"]) in BY_N else None)
+            for i in sorted(I.values(), key=lambda i: i["updated"], reverse=True)[:8]],
+    not_under_feature=[i["n"] for i in ORPHANS],
+    needs_fixing=[dict(n=i["n"], title=i["title"], why=why) for i, why in PROBLEMS])
+(DOCS / "handbook-data.json").write_text(json.dumps(_data, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+print(f"Shared data file written: {len(_data['features'])} features, {len(_data['requirements'])} requirements, "
+      f"{len(_data['flowcharts'])} flowcharts, {len(_data['wireframes'])} wireframes, {len(_data['comments'])} GitHub comments")
