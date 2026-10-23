@@ -66,6 +66,7 @@ nav:
       - "Create a purchase request": features/create-a-purchase-request.md
       - "Approve purchase requests": features/approve-purchase-requests.md
       - "Track purchase requests": features/track-purchase-requests.md
+      - "test feature": features/test-feature.md
   - Users:
       - User understanding: user-understanding.md
       - Journey map: journey-map.md

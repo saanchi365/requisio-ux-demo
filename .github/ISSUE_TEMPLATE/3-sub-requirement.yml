@@ -1,11 +1,11 @@
-name: Requirement
-description: One requirement inside a feature (level 2), or one step inside a big requirement (level 3).
-labels: ["requirement"]
+name: "3 · Sub-requirement"
+description: Pick this inside a 2 · Requirement. One part of a big requirement.
+labels: ["sub-requirement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Create this as a **sub-issue** of its feature (level 2) or of a big requirement (level 3), so it shows in the right place.
+        A **sub-requirement** sits inside a **2 · Requirement**. This is the last level: don't add sub-issues under it.
         Small points (e.g. "opens in Word", "clause library on the side") go in **Details** as bullets, not as more issues.
   - type: textarea
     attributes:

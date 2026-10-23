@@ -1,12 +1,12 @@
-name: Feature
-description: A big thing the product does (level 1). It becomes its own page in the handbook.
+name: "1 · Feature"
+description: Top level only. Never pick this inside another issue. A big thing the product does; it becomes its own page in the handbook.
 labels: ["feature"]
 body:
   - type: markdown
     attributes:
       value: |
         A **feature** is the top level, e.g. "Create a purchase request".
-        After creating it, add its requirements as **sub-issues** (Create sub-issue, at the bottom of the issue).
+        After creating it, add its requirements with **Create sub-issue** at the bottom, and pick **2 · Requirement**.
   - type: textarea
     attributes:
       label: What it is

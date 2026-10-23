@@ -1,10 +1,11 @@
 """The page maker: builds the handbook pages from GitHub, before MkDocs turns them into the website.
 
 How the handbook is organised (nothing here needs editing when you add work):
-  1. Feature      = an issue with the "feature" label and no parent    -> its own page
-  2. Requirement  = a sub-issue of a feature                           -> a box in the Issues tab
-  3. Detail       = a sub-issue of a requirement (only for big ones)   -> a box inside that box
-  Smaller points  = bullets in the issue's "Details" section
+  1 · Feature          = issue made with the "1 · Feature" form, not under anything  -> its own page
+  2 · Requirement      = placed under a feature                                      -> a box in the Requirements tab
+  3 · Sub-requirement  = placed under a requirement (only for big ones)              -> a box inside that box
+  Smaller points       = bullets in the issue's "Details" section
+  Anything at the wrong level is listed under "Needs fixing" on the Requirements page.
 
 It reads:
   - every issue (text, labels, sub-issues) and its columns on the project board
@@ -259,7 +260,8 @@ def issue_box(i, depth=0):
         parts.append(wire_images(i["n"]))
     parts.append(f"[Open #{i['n']} on GitHub]({GH}{i['n']})")
     parts += [issue_box(I[c], depth + 1) for c in i["children"] if c in I]
-    title = f"Issue #{i['n']} · {i['title']}".replace('"', "'")
+    kind = "Requirement" if depth == 0 else "Sub-requirement"
+    title = f"{kind} #{i['n']} · {i['title']}".replace('"', "'")
     return f'??? issue "{title}"\n' + ind("\n\n".join(p for p in parts if p), 4)
 
 
@@ -278,7 +280,7 @@ def feature_page(f):
             flows.append(f"{head}```mermaid\n{fl['mermaid']}\n```")
         tabs.append(("Flowchart", "\n\n".join(flows)))
     issues = [issue_box(I[c]) for c in f["children"] if c in I]
-    tabs.append(("Issues", "\n\n".join(issues) or "No issues yet."))
+    tabs.append(("Requirements", "\n\n".join(issues) or "No requirements yet."))
     tabs.append(("Use cases", s.get("use cases") or "No use cases written yet. Add them in the feature issue."))
     tab_text = "\n\n".join(f'=== "{name}"\n\n{ind(body, 4)}' for name, body in tabs)
     side_issues = "\n".join(f"- {ICON[I[c]['status']]} [#{c} {I[c]['title']}]({GH}{c})" for c in f["children"] if c in I)
@@ -316,7 +318,7 @@ hide:
 
 <aside class="side-panel" markdown>
 
-#### Issues
+#### Requirements
 
 {side_issues or 'None yet'}
 
@@ -356,7 +358,7 @@ hide:
 
 # Features
 
-<p class="lead">Each feature has a short overview, then tabs for its wireframes, flowchart, issues and use cases.</p>
+<p class="lead">Each feature has a short overview, then tabs for its wireframes, flowchart, requirements and use cases.</p>
 
 <div class="grid cards" markdown>
 
@@ -375,9 +377,9 @@ for f in FEATURES:
     {f['sections'].get('who uses it', '')} · {pill(f['status'])}
 
     <span class="bar bar--{PILL[f['status']]}"><span style="width:{pct}%"></span></span>
-    <span class="small">{done} of {len(t)} issues done</span>
+    <span class="small">{done} of {len(t)} requirements done</span>
 """)
-stats = [(len(FEATURES), "Features", ""), (len(work), "Issues", "")] + [
+stats = [(len(FEATURES), "Features", ""), (len(work), "Requirements", "")] + [
     (sum(1 for i in work if i["status"] == s), s, PILL[s]) for s in PILL]
 stat_html = "\n".join(f'  <div class="stat{" stat--" + c if c else ""}"><span class="num">{v}</span><span class="label">{l}</span></div>'
                       for v, l, c in stats)
@@ -477,10 +479,28 @@ rows = []
 for f in FEATURES:
     rows.append(row(f, 0, f))
     rows += [row(i, depth_of(i), f) for i in tree(f["n"])]
+# Safety check: anything sitting at the wrong level
+PROBLEMS = []
+for i in I.values():
+    d = depth_of(i)
+    if "feature" in i["labels"] and i["parent"]:
+        PROBLEMS.append((i, "it's a 1 · Feature but sits under another issue. Remove it from there."))
+    elif i["n"] in BY_N or root(i["n"]) not in BY_N:
+        continue
+    elif d >= 3:
+        PROBLEMS.append((i, "it's a 4th level. Write it as a bullet in the Details of its sub-requirement instead."))
+    elif d == 2 and "requirement" in i["labels"]:
+        PROBLEMS.append((i, "it sits under a requirement, so its label should be sub-requirement."))
+    elif d == 1 and "sub-requirement" in i["labels"]:
+        PROBLEMS.append((i, "it sits directly under a feature, so its label should be requirement."))
+problem_text = ""
+if PROBLEMS:
+    problem_text = ('\n!!! warning "Needs fixing"\n    These are at the wrong level. Open each one on GitHub to fix it.\n\n' +
+                    "\n".join(f"    - [#{i['n']} {i['title']}]({GH}{i['n']}): {why}" for i, why in PROBLEMS) + "\n")
 orphan_text = ""
 if ORPHANS:
-    orphan_text = ("\n## Not under a feature\n\n<p class=\"lead\">These issues aren't a sub-issue of any feature yet. "
-                   "Add each one as a sub-issue of a feature so it shows on that feature's page.</p>\n\n"
+    orphan_text = ("\n## Not under a feature\n\n<p class=\"lead\">These aren't placed under any feature yet. "
+                   "Open the feature and use Add existing issue, so each one shows on that feature's page.</p>\n\n"
                    "| # | Issue | Status | Assignee |\n|---|---|---|---|\n" +
                    "\n".join(f"| [#{i['n']}]({GH}{i['n']}) | {i['title']} | {pill(i['status'])} | {who(i)} |"
                              for i in ORPHANS))
@@ -497,7 +517,7 @@ hide:
 # Requirements
 
 <p class="lead">Every issue, with the <a href="{BOARD_URL}">project board</a>'s columns, grouped by feature. Click a number to open it on GitHub and comment.</p>
-{board_note}
+{board_note}{problem_text}
 <div class="req-table" markdown>
 
 {HEAD}
@@ -514,5 +534,5 @@ menu = "\n".join(f"      - {json.dumps(f['title'])}: features/{f['slug']}.md" fo
 text = re.sub(r"(  - Features:\n      - features/index.md\n(?:      #.*\n)?)(?: {6,}-.*\n)*", lambda m: m.group(1) + menu + "\n", text)
 cfg.write_text(text, encoding="utf-8", newline="\n")
 
-print(f"Handbook pages made: {len(FEATURES)} features, {len(work)} issues, {len(ORPHANS)} not under a feature, "
+print(f"Handbook pages made: {len(FEATURES)} features, {len(work)} issues, {len(ORPHANS)} not under a feature, {len(PROBLEMS)} need fixing, "
       f"{sum(len(v) for v in WIREFRAMES.values())} wireframes, board read: {BOARD_READ}")
