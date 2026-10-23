@@ -30,7 +30,11 @@ body:
   - type: textarea
     attributes:
       label: Use cases
-      description: Optional. One per line, starting with "- ". Leave empty if there are none yet.
+      description: One per line, starting with "- ". They show under the feature's description, in a section people can open and close.
+      value: |
+        -
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: Open questions

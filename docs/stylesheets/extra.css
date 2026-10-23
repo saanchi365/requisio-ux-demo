@@ -248,3 +248,8 @@
   border-radius: 10px;
   margin: 0.4rem 0 1rem;
 }
+
+/* Use cases: a section under the feature's description that opens and closes */
+.md-typeset .overview details.usecases { margin: 10px 0 0; border: 1px solid var(--brand-line); border-radius: 10px; background: var(--md-default-bg-color); box-shadow: none; font-size: 0.78rem }
+.md-typeset .overview details.usecases > summary { font-weight: 600; color: var(--brand); background: none }
+.md-typeset .overview details.usecases > summary::before { background-color: var(--brand) }

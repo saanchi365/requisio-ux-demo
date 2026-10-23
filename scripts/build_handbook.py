@@ -281,8 +281,9 @@ def feature_page(f):
         tabs.append(("Flowchart", "\n\n".join(flows)))
     issues = [issue_box(I[c]) for c in f["children"] if c in I]
     tabs.append(("Requirements", "\n\n".join(issues) or "No requirements yet."))
-    if s.get("use cases"):  # use cases are optional
-        tabs.append(("Use cases", s["use cases"]))
+    # use cases sit under the description, in a section that opens and closes
+    uc = bullets(s.get("use cases"))
+    use_cases = (f'??? usecases "Use cases · {len(uc)}"\n' + "\n".join(f"    - {u}" for u in uc)) if uc else ""
     tab_text = "\n\n".join(f'=== "{name}"\n\n{ind(body, 4)}' for name, body in tabs)
     side_issues = "\n".join(f"- {ICON[I[c]['status']]} [#{c} {I[c]['title']}]({GH}{c})" for c in f["children"] if c in I)
     listing = lambda xs: "\n".join(f"- {x}" for x in xs) or "None"
@@ -298,6 +299,8 @@ hide:
 <div class="overview" markdown>
 
 {s.get('what it is') or s.get('requirement') or ''}
+
+{use_cases}
 
 <div class="facts">
   <div><span class="label">Who uses it</span>{s.get('who uses it', '—')}</div>

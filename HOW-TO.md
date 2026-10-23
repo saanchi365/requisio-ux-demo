@@ -17,7 +17,7 @@ change the issue, the board or the file, and the website updates within a minute
 | Assigned to | The issue's Assignees | Right side of the issue |
 | Given by | The "Given by" box in the form | Filled when creating |
 | Open questions | The "Open questions" box in the feature or requirement | One per line, starting with "- " |
-| Use cases | The "Use cases" box in the feature | Optional |
+| Use cases (shown under the feature's description, open and close) | The "Use cases" box in the feature | Required for every feature; requirements don't have use cases |
 | Flowcharts | A file in `flowcharts/` | See `flowcharts/README.md` |
 | Wireframes | A picture in `wireframes/`, named with the issue number | See `wireframes/README.md` |
 | Wireframe description and questions | A `.md` file next to the picture, same name | Optional |
@@ -33,7 +33,7 @@ change the issue, the board or the file, and the website updates within a minute
 ```
 
 ## Add a feature
-1. **Issues → New issue → 1 · Feature**. Fill in what it is, who uses it, stage and given by. Use cases and open questions are optional.
+1. **Issues → New issue → 1 · Feature**. Fill in what it is, who uses it, stage, use cases and given by. Open questions are optional.
 2. On the **board**: status, priority, target date.
 3. Add its **flowchart** to `flowcharts/` and its **wireframes** to `wireframes/` (almost every feature has both).
 
