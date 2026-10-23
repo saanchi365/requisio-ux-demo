@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Status** | Draft — made-up demo content |
-| **Area** | Approvals (#10) |
+| **Feature** | Approve purchase requests (#10) |
 | **Based on** | Issues #9, #11, #12 · Journey map stages 4–6 |
 | **Diagram type** | Sequence diagram |
 
@@ -27,6 +27,9 @@ sequenceDiagram
     S-->>R: Approved
 ```
 <!-- --8<-- [end:flow] -->
+
+## Description
+Who sends what to whom when a request is approved, including the extra Finance step above an amount.
 
 ## What comes from the documents
 - Route shown on submit (#9)

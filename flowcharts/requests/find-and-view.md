@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Status** | Draft — made-up demo content |
-| **Area** | Request list & details (#14) |
+| **Feature** | Track purchase requests (#14) |
 | **Based on** | Issues #14, #15, #16 · Use cases 7–8 · Journey map stage 5 |
 | **Diagram type** | Flowchart |
 
@@ -34,6 +34,9 @@ flowchart TD
     classDef guess stroke-dasharray: 5 5
 ```
 <!-- --8<-- [end:flow] -->
+
+## Description
+How anyone finds a request (search or status tabs) and reads its status, route and history.
 
 ## What comes from the documents
 - Search, filters and status tabs (#15)

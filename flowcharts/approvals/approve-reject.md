@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Status** | Draft — made-up demo content |
-| **Area** | Approvals (#10) |
+| **Feature** | Approve purchase requests (#10) |
 | **Based on** | Issues #10, #11, #12, #13 · Use cases 4–6 · Journey map stage 6 |
 | **Diagram type** | Flowchart |
 
@@ -33,6 +33,9 @@ flowchart TD
     c -->|Delegate| k --> l
 ```
 <!-- --8<-- [end:flow] -->
+
+## Description
+How an approver decides on a waiting request: approve, reject with a reason, ask for changes, or delegate.
 
 ## What comes from the documents
 - Reject needs a reason (#11)

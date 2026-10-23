@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Status** | Draft — made-up demo content |
-| **Area** | Create request (#5) |
+| **Feature** | Create a purchase request (#5) |
 | **Based on** | Issues #5, #6, #7, #8, #9 · Use cases 1–3 · Journey map stages 1–4 |
 | **Diagram type** | Flowchart |
 
@@ -38,6 +38,9 @@ flowchart TD
     l -->|Yes| n
 ```
 <!-- --8<-- [end:flow] -->
+
+## Description
+How a requester raises a request: catalog or custom item, details, an optional quote, a check for missing fields, then submit or save as a draft.
 
 ## What comes from the documents
 - Catalog vs custom items (Use cases 1–2)

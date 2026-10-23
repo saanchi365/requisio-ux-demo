@@ -9,7 +9,7 @@ How the handbook is organised (nothing here needs editing when you add work):
 
 It reads:
   - every issue (text, labels, sub-issues) and its columns on the project board
-  - flowcharts/**.md   -> a flowchart belongs to the feature named in its "Area" line, e.g. "(#5)"
+  - flowcharts/**.md   -> a flowchart belongs to the feature named in its "Feature" line, e.g. "(#5)"
   - wireframes/*       -> a picture belongs to the issue number its file name starts with, e.g. "7-form.svg"
 and writes: docs/index.md, docs/requirements.md, docs/features/*.md and the menu in mkdocs.yml.
 
@@ -165,7 +165,7 @@ def root(n):
 FEATURES = [i for i in I.values() if "feature" in i["labels"] and not i["parent"]]
 for f in FEATURES:
     f["slug"] = slugify(f["title"])
-    f["flows"], f["questions"], f["unconfirmed"], f["wireframes"] = [], [], [], []
+    f["flows"], f["questions"], f["unconfirmed"], f["wireframes"] = [], bullets(f["sections"].get("open questions")), [], []
 BY_N = {f["n"]: f for f in FEATURES}
 ORPHANS = [i for i in I.values() if root(i["n"]) not in BY_N]
 
@@ -188,7 +188,7 @@ def section_bullets(text, heading):
 
 for path in sorted((ROOT / "flowcharts").rglob("*.md")):
     text = path.read_text(encoding="utf-8")
-    area = re.search(r"\|\s*\*\*Area\*\*\s*\|([^|\n]*)\|", text)
+    area = re.search(r"\|\s*\*\*(?:Feature|Area)\*\*\s*\|([^|\n]*)\|", text)
     diagram = re.search(r"```mermaid\s*\n(.*?)```", text, re.S)
     nums = [int(x) for x in re.findall(r"#(\d+)", area.group(1))] if area else []
     owners = {root(x) for x in nums if x in I} & set(BY_N)
@@ -281,7 +281,8 @@ def feature_page(f):
         tabs.append(("Flowchart", "\n\n".join(flows)))
     issues = [issue_box(I[c]) for c in f["children"] if c in I]
     tabs.append(("Requirements", "\n\n".join(issues) or "No requirements yet."))
-    tabs.append(("Use cases", s.get("use cases") or "No use cases written yet. Add them in the feature issue."))
+    if s.get("use cases"):  # use cases are optional
+        tabs.append(("Use cases", s["use cases"]))
     tab_text = "\n\n".join(f'=== "{name}"\n\n{ind(body, 4)}' for name, body in tabs)
     side_issues = "\n".join(f"- {ICON[I[c]['status']]} [#{c} {I[c]['title']}]({GH}{c})" for c in f["children"] if c in I)
     listing = lambda xs: "\n".join(f"- {x}" for x in xs) or "None"

@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Status** | Draft — made-up demo content |
-| **Area** | All features |
+| **Feature** | Whole product |
 | **Based on** | Issues #1, #5, #10, #14 · Use cases · Journey map |
 | **Diagram type** | Flowchart |
 
@@ -40,6 +40,9 @@ flowchart LR
     a3 -->|"edit and resubmit"| c2
     a2 --> t1
 ```
+
+## Description
+How the four features connect: admins set up the rules once, requesters create requests, approvers decide, and everyone tracks them.
 
 ## What comes from the documents
 - Four areas and who uses each (User understanding)

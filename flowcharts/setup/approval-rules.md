@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Status** | Draft — made-up demo content |
-| **Area** | Setup (#1) |
+| **Feature** | Setup: departments, categories and approval rules (#1) |
 | **Based on** | Issues #1, #2, #3, #4 · Use cases 9–11 |
 | **Diagram type** | Flowchart |
 
@@ -33,6 +33,9 @@ flowchart TD
     classDef guess stroke-dasharray: 5 5
 ```
 <!-- --8<-- [end:flow] -->
+
+## Description
+How an admin sets up departments, categories and approval rules, and what happens when two rules clash.
 
 ## What comes from the documents
 - Departments, categories and rules by amount (#2, #3, #4)

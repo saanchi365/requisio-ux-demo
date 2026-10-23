@@ -9,6 +9,9 @@ reject** requests, and lets **admins set up the rules**.
 
 | Where | What |
 |---|---|
+| **[HOW-TO.md](HOW-TO.md)** | **How to add features, requirements, flowcharts and wireframes, and what happens if something goes wrong** |
+| [handbook.yml](handbook.yml) | Project name, brief and stages for the website |
+| [docs/user-stories.md](docs/user-stories.md) | User stories |
 | [docs/user-understanding.md](docs/user-understanding.md) | Who uses Requisio |
 | [docs/journey-map.md](docs/journey-map.md) | Journey of raising a purchase request |
 | [docs/use-cases.md](docs/use-cases.md) | Main use cases |

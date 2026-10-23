@@ -34,6 +34,10 @@ body:
       description: The small points, one per line, starting with "- "
       value: |
         - 
+  - type: textarea
+    attributes:
+      label: Open questions
+      description: Optional. Questions about this requirement that still need an answer, one per line starting with "- ". They show under the Requirements table.
   - type: dropdown
     attributes:
       label: How sure are we?
